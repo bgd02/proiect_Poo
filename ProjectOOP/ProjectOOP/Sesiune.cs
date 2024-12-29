@@ -1,17 +1,38 @@
-﻿public class Sesiune
+﻿namespace ProjectOOP;
+
+public class Sesiune
 {
-    public string Cod_Sesiune { get; set; }
-    public string Nume_Sesiune { get; set; }
-    public bool IsOpen { get; set; }
-    public List<Proiect> Proiecte { get; set; } = new List<Proiect>();
-
-    public void AddProiect(Proiect proiect)
+    public string codSesiune { get; private set; }
+    public string numeSesiune { get; private set; }
+    public bool isOpen { get; private set; }
+    public List<Proiect> proiecte = new List<Proiect>();
+    
+    public Sesiune(string codSesiune, string numeSesiune, bool isOpen)
     {
-        Proiecte.Add(proiect);
+        this.codSesiune = codSesiune;
+        this.numeSesiune = numeSesiune;
+        this.isOpen = true;
+    }
+    
+    public void isOpenSesion()
+    {
+        isOpen = true;
     }
 
-    public void PredareProiect(string student, string continut)
+    public void isClosed()
     {
-        Proiecte.Add(new Proiect { Student = student, Continut = continut, Nota = 0 });
+        isOpen = false;
     }
+
+    public override string ToString()
+    {
+        return $"Sesiune: {numeSesiune} (Cod: {codSesiune}, : {isOpen})";
+    }
+
+    public void AdaugaProiect(string numeSesiune, string codSesiune)
+    {
+        
+    }
+    
+    
 }

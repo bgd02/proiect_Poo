@@ -1,39 +1,87 @@
-﻿using ConsoleApp1;
+﻿using System.Collections.Concurrent;
+using System.Runtime.Intrinsics.Arm;
+using Microsoft.VisualBasic.FileIO;
 
-public class Profesor : Utilizator
+namespace ProjectOOP;
+
+public  class Profesor : Utilizator
 {
-    public List<Sesiune> Sesiuni { get; set; } = new List<Sesiune>();
-
-    public Profesor(string numarMatricol, string numePrenume, string email, string parola)
-        : base(numarMatricol, numePrenume, email, parola)
-    { }
-
-    public override string showMenu()
+    public Profesor(string numarMatricol, string numePrenume, string email, string parola) : base(numarMatricol,
+        numePrenume, email, parola)
     {
-        string opt;
-        bool meniu = true;
-        do
+
+    }
+
+    public void DeschideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
+    {
+        if (sesiune.Exists(s => s.codSesiune == codSesiune))
         {
-            Console.WriteLine("Alegeti o optiune: ");
-            opt = Console.ReadLine();
-            switch (opt)
-            {
-                case "0":
-                    Console.WriteLine("0. Iesire");
-                    return "Ati iesit din meniu";
-                case "1": Console.WriteLine("1. Deschidere sesiune"); break;
-                case "2": Console.WriteLine("2. Inchidere sesiune"); break;
-                case "3": Console.WriteLine("3. Notare studenti"); break;
-                case "4": Console.WriteLine("4. Raspuns reclamatii"); break;
-                case "5": Console.WriteLine("5. Modificare nota"); break;
-            }
-        } while (meniu);
-
-        return "Meniul s-a terminat";
+            Console.WriteLine("Sesiunea deja exista.");
+        }
+        sesiune.Add(Sesiune);
+        Console.WriteLine("Sesiunea a fost deschisa.");
     }
 
-    public void AddSesiune(Sesiune sesiune)
+    public void InchideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
     {
-        Sesiuni.Add(sesiune);
+        if (Sesiune.codSesiune == codSesiune)
+        {
+            sesiune.Remove(Sesiune);
+            Console.WriteLine("Sesiunea a fost inchisa!");
+        }
     }
+
+    public void VizualizareaListei(List<Sesiune> sesiune, string codSesiune, string numeSesiune, bool isOpen)
+    {
+        foreach (var ses in sesiune)
+        {
+            Console.WriteLine($"Nume sesiune: {ses.numeSesiune} -> Cod sesiune: {ses.codSesiune} -> Activ: {ses.isOpen}");
+        }
+    }
+
+    public void NotareProiectSesiune(List<Proiect> proiecte)
+    {
+        int notaProiect;
+        foreach (var n in proiecte)
+        {
+            Console.WriteLine($"Nume{n.Student} continut {n.Continut}");
+            notaProiect = int.Parse(Console.ReadLine());
+            n.nota = notaProiect;
+            Console.WriteLine($"Nota {n.nota} a fost acordata studentului {n.Student}");
+        }
+    }
+
+    public void RaspunsReclamatii(List<Proiect> proiecte)
+    {
+        foreach (var r in proiecte)
+        {
+            if (r.reclamatie != null)
+            {
+                Console.WriteLine($"Reclamatie: {r.reclamatie}");
+                string raspunsReclamatii = Console.ReadLine();
+                Console.WriteLine($"Raspunsul reclamatiei: {raspunsReclamatii}");
+            }
+            else
+            {
+                Console.WriteLine("Nu exista reclamatii.");
+            }
+        }
+    }
+
+    public void ModificareNotaProiect(List<Proiect> proiecte, string numeStudent)
+    {
+        foreach (var m in proiecte)
+        {
+            if (m.Student == numeStudent)
+            {
+                Console.WriteLine("Profesorul reexamineaza nota...");
+                m.nota = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Nota a fost modificata, nota este {m.nota}");
+            }
+        }
+    }
+    
+    
 }
+    
+    
