@@ -1,78 +1,83 @@
-using System.Text.RegularExpressions;
-namespace ProjectOOP;
-public abstract class Utilizator
+namespace ConsoleApp1
 {
-    private string NumarMatricol; 
-    public string numarMatricol 
+    using System;
+    using System.Text.RegularExpressions;
+    using System.Collections.Generic;
+
+    public abstract class Utilizator
     {
-        get { return NumarMatricol;}
-        set
+        private string NumarMatricol;
+
+        public string numarMatricol
         {
-            if (value.Length == 5 && int.TryParse(value.ToString(), out _))
+            get { return NumarMatricol; }
+            set
             {
-                NumarMatricol = value;
-            }
-            else
-            {
-                throw new ArgumentException("Numarul matricol trebuie sa contina doar 5 caractere.( ex: 00000)");
+                if (value.Length == 5 && int.TryParse(value, out _))
+                {
+                    NumarMatricol = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Numarul matricol trebuie sa contina doar 5 caractere (ex: 00000).");
+                }
             }
         }
-        
-    }
 
-    private string NumePrenume;
+        protected string NumePrenume;
 
-    public string numePrenume
-    {
-      
-        get { return NumePrenume;}
-        set
+        public string numePrenume
         {
-            if (Regex.IsMatch(value, @"^[a-zA-Z]+$"))
+            get { return NumePrenume; }
+            set
             {
-                NumePrenume = value;
-            }
-            else
-            {
-                throw new ArgumentException("Numele trebuie sa contina doar litere.");
+                if (Regex.IsMatch(value, @"^[a-zA-Z]+$"))
+                {
+                    NumePrenume = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Numele trebuie sa contina doar litere.");
+                }
             }
         }
-    }
 
-    private string Email;
+        private string Email;
 
-    public string email
-    {
-        get { return Email;}
-        set { Email = value; }
-    }
-
-    private string Parola;
-    
-    public string parola
-    {
-        get { return Parola;}
-        set
+        public string email
         {
-            if (Regex.IsMatch(value, @"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?"":{}|<>])$"))
+            get { return Email; }
+            set { Email = value; }
+        }
+
+        private string Parola;
+
+        public string parola
+        {
+            get { return Parola; }
+            set
             {
-                Parola = value;
-            }
-            else
-            {
-                throw new ArgumentException("Parola trebuie sa contina cel putin o litera mare, un caracter special si o cifra.");
+                if (Regex.IsMatch(value, @"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?"":{}|<>])$"))
+                {
+                    Parola = value;
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        "Parola trebuie sa contina cel putin o litera mare, un caracter special si o cifra.");
+                }
             }
         }
-    }
 
-    public Utilizator(string numarMatricol, string numePrenume, string email, string parola)
-    {
-        this.NumarMatricol = numarMatricol;
-        this.NumePrenume = numePrenume;
-        this.Email = email;
-        this.parola = parola;
-    }
+        public Utilizator(string numarMatricol, string numePrenume, string email, string parola)
+        {
+            this.NumarMatricol = numarMatricol;
+            this.NumePrenume = numePrenume;
+            this.Email = email;
+            this.parola = parola;
+        }
 
-    public abstract string showMenu();
-    
+        public abstract string showMenu();
+    }
 }
+    
