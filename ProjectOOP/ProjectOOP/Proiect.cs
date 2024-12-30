@@ -12,7 +12,7 @@
         this.nota = nota;
         this.reclamatie = reclamatie;
     }
-    
-    
-    
+
+
+   
 }

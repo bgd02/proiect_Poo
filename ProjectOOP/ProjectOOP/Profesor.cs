@@ -1,16 +1,12 @@
-﻿using System.Collections.Concurrent;
-using System.Runtime.Intrinsics.Arm;
-using Microsoft.VisualBasic.FileIO;
+﻿using ConsoleApp1;
 
-namespace ProjectOOP;
-
-public  class Profesor : Utilizator
+public class Profesor : Utilizator
 {
-    public Profesor(string numarMatricol, string numePrenume, string email, string parola) : base(numarMatricol,
-        numePrenume, email, parola)
-    {
+    public List<Sesiune> Sesiuni { get; set; } = new List<Sesiune>();
 
-    }
+    public Profesor(string numarMatricol, string numePrenume, string email, string parola)
+        : base(numarMatricol, numePrenume, email, parola)
+    { }
 
     public void DeschideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
     {
@@ -30,25 +26,23 @@ public  class Profesor : Utilizator
             Console.WriteLine("Sesiunea a fost inchisa!");
         }
     }
-
-    public void VizualizareaListei(List<Sesiune> sesiune, string codSesiune, string numeSesiune, bool isOpen)
+    public void Vizualizare_Proiect(List<Proiect>LProiecte)
     {
-        foreach (var ses in sesiune)
+        foreach (var proiect in LProiecte)
         {
-            Console.WriteLine($"Nume sesiune: {ses.numeSesiune} -> Cod sesiune: {ses.codSesiune} -> Activ: {ses.isOpen}");
+            Console.WriteLine($"Numele studentului: {proiect.Student}, Continutul proiectului: {proiect.Continut}, Nota: {proiect.nota}, Reclamatie: {proiect.reclamatie}");
         }
     }
 
-    public void NotareProiectSesiune(List<Proiect> proiecte)
+    public void notare(List<(Proiect,int)> Nota,Proiect proiect, int nota)
     {
-        int notaProiect;
-        foreach (var n in proiecte)
-        {
-            Console.WriteLine($"Nume{n.Student} continut {n.Continut}");
-            notaProiect = int.Parse(Console.ReadLine());
-            n.nota = notaProiect;
-            Console.WriteLine($"Nota {n.nota} a fost acordata studentului {n.Student}");
-        }
+        proiect.nota = nota;
+        Nota = new List<(Proiect proiect, int Nota)>();
+    }
+    
+    public void AddSesiune(Sesiune sesiune)
+    {
+        Sesiuni.Add(sesiune);
     }
 
     public void RaspunsReclamatii(List<Proiect> proiecte)

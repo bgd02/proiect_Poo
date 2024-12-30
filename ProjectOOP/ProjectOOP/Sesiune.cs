@@ -1,11 +1,9 @@
-﻿namespace ProjectOOP;
-
-public class Sesiune
+﻿public class Sesiune
 {
     public string codSesiune { get; private set; }
     public string numeSesiune { get; private set; }
     public bool isOpen { get; private set; }
-    public List<Proiect> proiecte = new List<Proiect>();
+    public List<Proiect> LProiecte = new List<Proiect>();
     
     public Sesiune(string codSesiune, string numeSesiune, bool isOpen)
     {
@@ -29,9 +27,10 @@ public class Sesiune
         return $"Sesiune: {numeSesiune} (Cod: {codSesiune}, : {isOpen})";
     }
 
-    public void AdaugaProiect(string numeSesiune, string codSesiune)
+    public void AdaugaProiect(Proiect proiect)
     {
-        
+        LProiecte.Add(proiect);
+        Console.WriteLine("Ati adaugat proiectul cu succes");
     }
     
     
