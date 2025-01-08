@@ -57,14 +57,14 @@ namespace ConsoleApp1
             get { return Parola; }
             set
             {
-                if (Regex.IsMatch(value, @"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?"":{}|<>])$"))
+                if (Regex.IsMatch(value, @"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?""{}|<>]).{8,}$"))
                 {
                     Parola = value;
                 }
                 else
                 {
                     throw new ArgumentException(
-                        "Parola trebuie sa contina cel putin o litera mare, un caracter special si o cifra.");
+                        "Parola trebuie să conțină cel puțin o literă mare, un caracter special, o cifră și să aibă cel puțin 8 caractere.");
                 }
             }
         }

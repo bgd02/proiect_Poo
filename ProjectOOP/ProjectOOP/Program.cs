@@ -1,8 +1,11 @@
-﻿namespace ConsoleApp1;
+﻿namespace ProjectOOP;
+
 class Program
 {
     static void Main(string[] args)
     {
-        Profesor profesor = new Profesor("12312", "John Doe", "John Doe@gmail.com","Az3&");
+        Console.WriteLine("Hello World!");
+        Profesor profesor = new Profesor("12312", "John Doe", "JohnDoe@gmail.com", "A1!aaaaa");
+        profesor.AfiseazaInformatii();
     }
 }

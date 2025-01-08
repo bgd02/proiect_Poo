@@ -4,7 +4,7 @@
     public string numeSesiune { get; private set; }
     public bool isOpen { get; private set; }
     public List<Proiect> LProiecte = new List<Proiect>();
-    
+   
     public Sesiune(string codSesiune, string numeSesiune, bool isOpen)
     {
         this.codSesiune = codSesiune;

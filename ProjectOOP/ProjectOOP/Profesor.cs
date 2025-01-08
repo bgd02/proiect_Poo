@@ -14,8 +14,11 @@ public class Profesor : Utilizator
         {
             Console.WriteLine("Sesiunea deja exista.");
         }
-        sesiune.Add(Sesiune);
-        Console.WriteLine("Sesiunea a fost deschisa.");
+        else
+        {
+            sesiune.Add(Sesiune);
+            Console.WriteLine("Sesiunea a fost deschisa.");
+        }
     }
 
     public void InchideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
@@ -30,26 +33,31 @@ public class Profesor : Utilizator
     {
         foreach (var proiect in LProiecte)
         {
-            Console.WriteLine($"Numele studentului: {proiect.Student}, Continutul proiectului: {proiect.Continut}, Nota: {proiect.nota}, Reclamatie: {proiect.reclamatie}");
+            Console.WriteLine($"Numele studentului: {proiect.Student}, Numele proiectului: {proiect.numeProiect}, Nota: {proiect.nota}, Reclamatie: {proiect.Lreclamatii}");
         }
     }
 
-    public void notare(List<(Proiect,int)> Nota,Proiect proiect, int nota)
+    public void NotareProiect(List<Proiect> Nota,Proiect proiect, int nota)
     {
         proiect.nota = nota;
-        Nota = new List<(Proiect proiect, int Nota)>();
+        Nota.Add(proiect);
     }
     
-    public void AddSesiune(Sesiune sesiune)
+    /*public void AddSesiune(Sesiune sesiune)
     {
         Sesiuni.Add(sesiune);
+    }*/
+
+    public void AdaugaReclamatii(List<Proiect> Lreclamatii, Proiect p)
+    {
+        Lreclamatii.Add(p);
     }
 
     public void RaspunsReclamatii(List<Proiect> proiecte)
     {
         foreach (var r in proiecte)
         {
-            if (r.reclamatie != null)
+            if (r.Lreclamatii != null)
             {
                 Console.WriteLine($"Reclamatie: {r.reclamatie}");
                 string raspunsReclamatii = Console.ReadLine();
@@ -61,7 +69,7 @@ public class Profesor : Utilizator
             }
         }
     }
-
+            
     public void ModificareNotaProiect(List<Proiect> proiecte, string numeStudent)
     {
         foreach (var m in proiecte)
@@ -70,12 +78,15 @@ public class Profesor : Utilizator
             {
                 Console.WriteLine("Profesorul reexamineaza nota...");
                 m.nota = int.Parse(Console.ReadLine());
-                Console.WriteLine($"Nota a fost modificata, nota este {m.nota}");
+                Console.WriteLine($"Nota a fost modificata : {m.nota}");
             }
         }
     }
-    
-    
+
+    public void AfiseazaInformatii()
+    {
+        Console.WriteLine($"Nume: {NumePrenume} -> Numar Matricol: {numarMatricol} -> Email: {email}");
+    }
 }
     
     

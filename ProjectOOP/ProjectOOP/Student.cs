@@ -1,29 +1,31 @@
  using ConsoleApp1;
+ using ProjectOOP;
 
  public class Student : Utilizator
  {
-     public List<(Proiect proiect, int Nota)> Note;
 
         public Student(string numarMatricol, string numePrenume, string email, string parola)
             : base(numarMatricol, numePrenume, email, parola)
         {
-            Note = new List<(Proiect proiect, int Nota)>();
+            
         }
 
         public void InscriereLaSesiune(List<Sesiune> LSesiune,string cod, Profesor profesor,Proiect proiect)
         {
             foreach (var s in LSesiune)
             {
-                if (s.codSesiune== cod && s.isOpen)
+                if (s.codSesiune == cod && s.isOpen)
                 {
                     Console.WriteLine($"Studentul {numePrenume} s-a înscris la sesiunea '{s.numeSesiune}'.");
-                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Sesiunea nu este disponibila.");
                 }
             }
-            Console.WriteLine("Sesiunea nu este disponibila.");
         }
-        
-        public void PredareProiect(List<Sesiune> LSesiune,List<Proiect> LProiecte,string cod, Proiect proiect)
+
+        public void PredareProiect(List<Sesiune> LSesiune, List<Proiect> LProiecte, string cod, Proiect proiect)
         {
             foreach (var sesiune in LSesiune)
             {
@@ -31,27 +33,48 @@
                 {
                     LProiecte.Add(proiect);
                     Console.WriteLine($"Proiectul a fost predat pentru sesiunea '{sesiune.numeSesiune}'.");
-                    return;
+                    
+                }
+                else
+                {
+                    Console.WriteLine("Proiectul nu poate fi predat.");
                 }
             }
-            Console.WriteLine("Nu s-a putut preda proiectul.");
+
+           
         }
 
-        public void ViewGrade(Proiect proiect)
+        public void VizualizareNota(Proiect proiect)
         {
             Console.WriteLine($"Nota proiectului este: {proiect.nota}");
         }
 
-        public void ViewGradeHistory(List<(Proiect,int)> LProiecte,string Nume)
+        public void IstoricNote(List<Proiect> LProiecte,string Nume)
         {
             foreach (var proiect in LProiecte)
             {
-                if (proiect.Item1.Student == Nume)
+                if (proiect.Student == Nume)
                 {
-                    Console.WriteLine($"Proiectul studentului: {proiect.Item1.nota} are nota: {proiect.Item2}");
+                    Console.WriteLine($"Proiectul studentului: {proiect.Student} are nota: {proiect.nota}");
                 }
             }
         }
-      
+
+        public void Reclamatie(List<Proiect> Lreclamatii, Proiect pr)
+        {
+            foreach (var sr in Lreclamatii)
+            {
+                if (sr.Student == pr.Student && sr.numeProiect == pr.numeProiect)
+                {
+                    Console.WriteLine("Reclamatie: ");
+                    pr.reclamatie = Console.ReadLine();
+                    Lreclamatii.Add(pr);
+                }
+                else
+                {
+                    Console.WriteLine("Nu exista numele proiectului sau studentul.");
+                }
+            }
+        }
         
     }
