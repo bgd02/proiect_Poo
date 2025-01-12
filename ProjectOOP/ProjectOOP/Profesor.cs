@@ -2,13 +2,14 @@
 
 public class Profesor : Utilizator
 {
-    public List<Sesiune> Sesiuni { get; set; } = new List<Sesiune>();
+    
 
     public Profesor(string numarMatricol, string numePrenume, string email, string parola)
         : base(numarMatricol, numePrenume, email, parola)
-    { }
+    {
+    }
 
-    public void DeschideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
+    public void DeschideSesiunea(List<Sesiune> sesiune,List<Proiect> proiecte, string codSesiune, Sesiune Sesiune, Proiect proiect)
     {
         if (sesiune.Exists(s => s.codSesiune == codSesiune))
         {
@@ -17,19 +18,18 @@ public class Profesor : Utilizator
         else
         {
             sesiune.Add(Sesiune);
+            proiecte.Add(proiect);
             Console.WriteLine("Sesiunea a fost deschisa.");
         }
     }
-
-    public void InchideSesiunea(List<Sesiune> sesiune, string codSesiune, Sesiune Sesiune)
+    
+    public void InchideSesiunea(List<Sesiune> sesiune, List<Proiect> proiecte, Sesiune Sesiune, Proiect proiect)
     {
-        if (Sesiune.codSesiune == codSesiune)
-        {
             sesiune.Remove(Sesiune);
+            proiecte.Remove(proiect);
             Console.WriteLine("Sesiunea a fost inchisa!");
-        }
     }
-    public void Vizualizare_Proiect(List<Proiect>LProiecte)
+    public void VizualizareProiect(List<Proiect>LProiecte)
     {
         foreach (var proiect in LProiecte)
         {

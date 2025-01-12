@@ -77,6 +77,9 @@ namespace ConsoleApp1
             this.parola = parola;
         }
 
+        
+            
+        
     }
 }
     

@@ -10,7 +10,7 @@
             
         }
 
-        public void InscriereLaSesiune(List<Sesiune> LSesiune,string cod, Profesor profesor,Proiect proiect)
+        public void InscriereLaSesiune(List<Sesiune> LSesiune,string cod,Proiect proiect)
         {
             foreach (var s in LSesiune)
             {
