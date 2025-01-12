@@ -7,6 +7,9 @@ class Program
 {
     static void Main(string[] args)
     {
+        List<Sesiune> Sesiuni = new List<Sesiune>();
+        
+        List<Proiect> Proiecte = new List<Proiect>();
 
         List<Utilizator> utilizatori = new List<Utilizator>();
 
@@ -47,13 +50,13 @@ class Program
                         {
                             case Profesor profesor1:
                             {
-                                MeniuProfesor(profesor);
+                                MeniuProfesor(profesor,Sesiuni,Proiecte);
                                 break;
                             }
 
                             case Student student1:
                             {
-                                MeniuStudent(student);
+                                MeniuStudent(student, Sesiuni,Proiecte);
                                 break;
                             }
 
@@ -63,53 +66,12 @@ class Program
                     break;
                 }
             }
-            /* if (optiune == "0")
-             {
-                 open = false;
-                 break;
-             }
+           
 
-             if (optiune == "1")
-             {
-                 Console.WriteLine("Scrieti email-ul contului: ");
-                 string email = Console.ReadLine();
-                 Console.WriteLine("Scrieti parola contului: ");
-                 string parola = Console.ReadLine();
-
-                 var utilizator = utilizatori.Find(u => u.email == email && u.parola == parola);
-
-
-                 if (utilizator == null)
-                 {
-                     Console.WriteLine("Invalid.");
-                 }
-                 else
-                 {
-                     switch (utilizator)
-                     {
-                         case Profesor profesor1:
-                         {
-                             MeniuProfesor(profesor);
-                             break;
-                         }
-
-                         case Student student1:
-                         {
-                             MeniuStudent(student);
-                             break;
-                         }
-
-                     }
-                 }
-             }
-     }
- }*/
-
-            static void MeniuProfesor(Profesor profesor)
+            static void MeniuProfesor(Profesor profesor,List<Sesiune> Sesiuni, List<Proiect> Proiecte)
             {
 
-                List<Sesiune> Sesiuni = new List<Sesiune>();
-                List<Proiect> Proiecte = new List<Proiect>();
+                
                 Sesiune sesiune = null;
                 var proiect = new Proiect("Lazar Andrei", "Apa", 2, "nimic"); // Exemplu
                 bool John = true;
@@ -216,11 +178,10 @@ class Program
                 }
             }
 
-            static void MeniuStudent(Student student)
+            static void MeniuStudent(Student student, List<Sesiune> sesiuni, List<Proiect> Proiecte)
             {
-                List<Sesiune> Sesiuni = new List<Sesiune>();
-                List<Proiect> Proiecte = new List<Proiect>();
-                Sesiune sesiune = null;
+                
+                
                 Proiect proiect = null;
                 bool Mircea = true;
                 while (Mircea)
@@ -237,11 +198,11 @@ class Program
                         case "1":
                         {
 
-                            foreach (var s in Sesiuni)
+                            foreach (var s in sesiuni)
                             {
                                 Console.WriteLine("Introduceti codul sesiunii la care doriti sa va inscrieti : ");
                                 string cod = Console.ReadLine();
-                                student.InscriereLaSesiune(Sesiuni, cod, proiect);
+                                student.InscriereLaSesiune(sesiuni, cod, proiect);
                                 Console.WriteLine("Te ai inscris cu succes!");
 
                             }
