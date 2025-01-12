@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Security.AccessControl;
 using ConsoleApp1;
 
 namespace ProjectOOP;
@@ -8,7 +9,6 @@ class Program
     static void Main(string[] args)
     {
         List<Sesiune> Sesiuni = new List<Sesiune>();
-        
         List<Proiect> Proiecte = new List<Proiect>();
 
         List<Utilizator> utilizatori = new List<Utilizator>();
@@ -50,13 +50,13 @@ class Program
                         {
                             case Profesor profesor1:
                             {
-                                MeniuProfesor(profesor,Sesiuni,Proiecte);
+                                MeniuProfesor(profesor, Sesiuni, Proiecte);
                                 break;
                             }
 
                             case Student student1:
                             {
-                                MeniuStudent(student, Sesiuni,Proiecte);
+                                MeniuStudent(student, Sesiuni, Proiecte);
                                 break;
                             }
 
@@ -66,14 +66,12 @@ class Program
                     break;
                 }
             }
-           
 
-            static void MeniuProfesor(Profesor profesor,List<Sesiune> Sesiuni, List<Proiect> Proiecte)
+            static void MeniuProfesor(Profesor profesor, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
             {
 
-                
                 Sesiune sesiune = null;
-                var proiect = new Proiect("Lazar Andrei", "Apa", 2, "nimic"); // Exemplu
+                Proiect proiect = new Proiect("---", "---", "---", "---");
                 bool John = true;
 
 
@@ -133,55 +131,49 @@ class Program
                                 Console.WriteLine($"{s.codSesiune} -> {s.numeSesiune}");
                             }
 
+                            foreach (var p in Proiecte)
+                            {
+                                Console.WriteLine($"{p.Student} -> {p.numeProiect} -> {p.nota}");
+                            }
 
                             break;
                         }
                         case "4":
                         {
 
-                            for (int i = 0; i < Proiecte.Count; i++)
+                           foreach(var n in Proiecte)
                             {
-                                var n = Proiecte[i];
                                 Console.WriteLine($"Introduceti nota pentru studentul {n.Student}");
                                 string notastd = Console.ReadLine();
-
-                                if (int.TryParse(notastd, out int notaStudent))
-                                {
-                                    n.nota = notaStudent;
-                                    Console.WriteLine($"Nota studentului {n.Student} este {n.nota}");
-                                    profesor.NotareProiect(Proiecte, proiect, notaStudent);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Nota invalida. Introduceti o valoare numerica!");
-                                    i--; // Revino la același student pentru a cere nota din nou.
-                                }
+                                n.nota = notastd;
+                                Console.WriteLine($"Nota studentului {n.Student} este {n.nota}");
                             }
-
-
-
+                            profesor.NotareProiect(Proiecte, proiect);
                             break;
                         }
-                        case "5":
-                        {
+                        
+                    
+
+                    case "5":
+                    {
 
 
-                            break;
-                        }
-                        case "7":
-                        {
-
-                            John = false;
-                            break;
-                        }
+                        break;
+                    }
+                    case "7":
+                    {
+                        John = false;
+                        break;
                     }
                 }
             }
+        }
+    }
 
-            static void MeniuStudent(Student student, List<Sesiune> sesiuni, List<Proiect> Proiecte)
+    static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
             {
                 
-                
+                Sesiune sesiune = null;
                 Proiect proiect = null;
                 bool Mircea = true;
                 while (Mircea)
@@ -198,17 +190,37 @@ class Program
                         case "1":
                         {
 
-                            foreach (var s in sesiuni)
+                            foreach (var s in Sesiuni)
                             {
                                 Console.WriteLine("Introduceti codul sesiunii la care doriti sa va inscrieti : ");
                                 string cod = Console.ReadLine();
-                                student.InscriereLaSesiune(sesiuni, cod, proiect);
+                                student.InscriereLaSesiune(Sesiuni, cod, proiect);
                                 Console.WriteLine("Te ai inscris cu succes!");
 
                             }
                             
                             break;
                         }
+
+                        case "2":
+                        {
+                            // Exemplu
+                            Console.WriteLine("Introduceti codul sesiunii la care doriti sa va predati proiectul : ");
+                            string cod = Console.ReadLine();
+                            foreach (var s in Sesiuni)
+                            {
+                                if (cod == s.codSesiune && s.isOpen)
+                                {
+                                    Console.WriteLine("Introduceti numele proiectului pe care doriti sa il incarcati : ");
+                                    string numeProiect = Console.ReadLine();
+                                    var proiect2 = new Proiect(student.numePrenume, numeProiect, "---", "---");
+                                    Console.WriteLine($"{proiect2.Student} -> {proiect2.numeProiect} -> {proiect2.nota}");
+                                    student.PredareProiect(Sesiuni, Proiecte, cod, proiect2);
+                                    Proiecte.Add(proiect2);
+                                }
+                        }
+                            break;
+                    }
                         case "6":
                         {
                             Mircea = false;
@@ -219,6 +231,6 @@ class Program
             }
         }
     }
-}
+
 
 

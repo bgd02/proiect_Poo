@@ -37,10 +37,9 @@ public class Profesor : Utilizator
         }
     }
 
-    public void NotareProiect(List<Proiect> Nota,Proiect proiect, int nota)
+    public void NotareProiect(List<Proiect> Proiecte ,Proiect proiect)
     {
-        proiect.nota = nota;
-        Nota.Add(proiect);
+        Proiecte.Add(proiect);
     }
     
     /*public void AddSesiune(Sesiune sesiune)
@@ -77,7 +76,7 @@ public class Profesor : Utilizator
             if (m.Student == numeStudent)
             {
                 Console.WriteLine("Profesorul reexamineaza nota...");
-                m.nota = int.Parse(Console.ReadLine());
+                m.nota = Console.ReadLine();
                 Console.WriteLine($"Nota a fost modificata : {m.nota}");
             }
         }
