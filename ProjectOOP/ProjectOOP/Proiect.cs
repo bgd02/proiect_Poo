@@ -4,7 +4,7 @@
     public string numeProiect { get; set; }
     public string nota { get; set; }
     public string reclamatie { get; set; }
-    public List<Proiect> Lreclamatii { get; set; } = new List<Proiect>();
+    
     public Proiect(string student, string numeProiect, string nota, string reclamatie)
     {
         this.Student = student;

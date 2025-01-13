@@ -1,4 +1,5 @@
-﻿using ConsoleApp1;
+﻿using System.Threading.Channels;
+using ConsoleApp1;
 
 public class Profesor : Utilizator
 {
@@ -9,78 +10,90 @@ public class Profesor : Utilizator
     {
     }
 
-    public void DeschideSesiunea(List<Sesiune> sesiune,List<Proiect> proiecte, string codSesiune, Sesiune Sesiune, Proiect proiect)
+    public void DeschideSesiunea(List<Sesiune> sesiuni)
     {
-        if (sesiune.Exists(s => s.codSesiune == codSesiune))
+        string codSesiune;
+        Console.WriteLine("Codul Sesiunii: ");
+        codSesiune = Console.ReadLine();
+
+        string numeSesiune;
+        Console.WriteLine("Numele sesiunii: ");
+        numeSesiune = Console.ReadLine();
+
+        Sesiune sesiune = new Sesiune(codSesiune, numeSesiune, true);
+        if (sesiuni.Exists(s => s.codSesiune == codSesiune))
         {
-            Console.WriteLine("Sesiunea deja exista.");
+            sesiune.isOpen=true;
+            Console.WriteLine("Sesiunea deja exista."); 
         }
         else
         {
-            sesiune.Add(Sesiune);
-            proiecte.Add(proiect);
+            sesiuni.Add(sesiune);
             Console.WriteLine("Sesiunea a fost deschisa.");
         }
+        
     }
     
-    public void InchideSesiunea(List<Sesiune> sesiune, List<Proiect> proiecte, Sesiune Sesiune, Proiect proiect)
+    public void InchideSesiunea(List<Sesiune> sesiune)
     {
-            sesiune.Remove(Sesiune);
-            proiecte.Remove(proiect);
-            Console.WriteLine("Sesiunea a fost inchisa!");
-    }
-    public void VizualizareProiect(List<Proiect>LProiecte)
-    {
-        foreach (var proiect in LProiecte)
+        Console.WriteLine("Introduceti codul sesiunii pe care doriti sa o stergeti: ");
+        string codSesiune = Console.ReadLine();
+        bool sesiuneGasita = false;
+
+        for (var i = 0; i < sesiune.Count; i++)
         {
-            Console.WriteLine($"Numele studentului: {proiect.Student}, Numele proiectului: {proiect.numeProiect}, Nota: {proiect.nota}, Reclamatie: {proiect.Lreclamatii}");
+            if (sesiune[i].codSesiune == codSesiune)
+            {
+                sesiuneGasita = true;
+
+                Console.WriteLine("Sesiunea dumneavoastra a fost inchisa\nDoriti sa stergeti sesiunea?\nApasati tasta:\n0.Stergere\n1.Pastrare");
+                string opt = Console.ReadLine();
+
+                if (opt == "0")
+                {
+                    Console.WriteLine($"Sesiunea cu codul {codSesiune} a fost stearsa.");
+                    sesiune.RemoveAt(i); 
+                    break; 
+                }
+                else if (opt == "1")
+                {
+                    sesiune[i].isOpen = false; 
+                    Console.WriteLine("Sesiunea a ramas inchisa.");
+                    break; 
+                }
+            }
+        }
+
+        if (!sesiuneGasita)
+        {
+            Console.WriteLine("Nu exista codul introdus.");
         }
     }
 
-    public void NotareProiect(List<Proiect> Proiecte ,Proiect proiect)
+  
+
+    public void VizualizareLista(List<Sesiune> LSesiune)
     {
-        Proiecte.Add(proiect);
+        foreach (var s in LSesiune)
+        {
+            Console.WriteLine($"{s.codSesiune} -> {s.numeSesiune}");
+        }
+        
+    }
+    public void NotareProiect(Proiect n)
+    {
+        Console.WriteLine($"Introduceti nota pentru studentul {n.Student}");
+        string notastd = Console.ReadLine();
+        
+        n.nota = notastd;
+        
+        Console.WriteLine($"Nota studentului {n.Student} este {n.nota}");
     }
     
-    /*public void AddSesiune(Sesiune sesiune)
-    {
-        Sesiuni.Add(sesiune);
-    }*/
+  
 
-    public void AdaugaReclamatii(List<Proiect> Lreclamatii, Proiect p)
-    {
-        Lreclamatii.Add(p);
-    }
-
-    public void RaspunsReclamatii(List<Proiect> proiecte)
-    {
-        foreach (var r in proiecte)
-        {
-            if (r.Lreclamatii != null)
-            {
-                Console.WriteLine($"Reclamatie: {r.reclamatie}");
-                string raspunsReclamatii = Console.ReadLine();
-                Console.WriteLine($"Raspunsul reclamatiei: {raspunsReclamatii}");
-            }
-            else
-            {
-                Console.WriteLine("Nu exista reclamatii.");
-            }
-        }
-    }
-            
-    public void ModificareNotaProiect(List<Proiect> proiecte, string numeStudent)
-    {
-        foreach (var m in proiecte)
-        {
-            if (m.Student == numeStudent)
-            {
-                Console.WriteLine("Profesorul reexamineaza nota...");
-                m.nota = Console.ReadLine();
-                Console.WriteLine($"Nota a fost modificata : {m.nota}");
-            }
-        }
-    }
+   
+  
 
     public void AfiseazaInformatii()
     {
