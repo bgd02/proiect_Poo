@@ -11,6 +11,8 @@ class Program
         List<Sesiune> Sesiuni = new List<Sesiune>();
         List<Proiect> Proiecte = new List<Proiect>();
         
+        (Sesiuni, Proiecte) = Fisier.Incarcare();
+        
         List<(string,string)> Note=new List<(string,string)>();
         
         List<Utilizator> utilizatori = new List<Utilizator>();
@@ -27,12 +29,14 @@ class Program
         {
             string optiune;
 
+            
             Console.WriteLine("1. Login\n0. Exit");
             optiune = Console.ReadLine();
 
             switch (optiune)
             {
                 case "0":
+                    Fisier.Salvare(Sesiuni, Proiecte);
                     open = false;
                     break;
                 case "1":
@@ -112,10 +116,25 @@ class Program
                                 {   
                                  profesor.NotareProiect(n);
                                 }
+                            Fisier.Salvare(Sesiuni, Proiecte);
                            
                             break;
                         }
-                       
+                        case "5":
+                        {
+                            profesor.RaspunsReclamatii(Proiecte);
+                            break;
+                        }
+                        case "6":
+                        {
+                            profesor.ModificareNotaProiect(Proiecte);
+                            break;
+                        }
+                        case "7":
+                        {
+                            profesor.VizualizareProiect(Proiecte);
+                            break;
+                        }
                         case "8":
                         {
                             John = false;
@@ -183,5 +202,7 @@ class Program
             }
         }
     }
+
+
 
 

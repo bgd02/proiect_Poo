@@ -42,7 +42,7 @@ public class Fisier
         {
             if (!File.Exists(FilePath))
             {
-                Console.WriteLine("Fișierul de salvare nu există.");
+                Console.WriteLine("Fișierul nu există.");
                 return (new List<Sesiune>(), new List<Proiect>());
             }
 

@@ -46,18 +46,6 @@ public class Profesor : Utilizator
             }
         }
     }
-  
-    public void VizualizareProiect(List<Proiect>LProiecte)
-    {
-        foreach (var proiect in LProiecte)
-        {
-            Console.WriteLine($"Numele studentului: {proiect.Student}, Numele proiectului: {proiect.numeProiect}, Nota: {proiect.nota}, Reclamatie: {proiect.reclamatie}");
-        }
-    }
-  
-
-       
-
     public void DeschideSesiunea(List<Sesiune> sesiuni)
     {
         string codSesiune;
@@ -143,46 +131,6 @@ public class Profesor : Utilizator
         
         Console.WriteLine($"Nota studentului {n.Student} este {n.nota}");
     }
-    
-  
-
-    public void RaspunsReclamatii(List<Proiect>LProiecte)
-    {
-        foreach (var RE in LProiecte)
-        {
-            if (RE.reclamatie.Length < 5)
-            {
-                Console.WriteLine("Nu exista reclamatii");
-            }
-            else
-            {
-                Console.WriteLine($"Reclamatia este: {RE.reclamatie}");
-                Console.WriteLine("Introduceti raspunsul reclamatiei: ");
-                string reclamatie = Console.ReadLine();
-
-                Console.WriteLine($"{reclamatie}");
-                
-            }
-            
-        }
-        
-    }
-    public void ModificareNotaProiect(List<Proiect> proiecte)
-    {
-        Console.WriteLine("Introduceti Numele studentului caruia doriti sa-i schimbati nota");
-        string numeStudent=Console.ReadLine();
-        
-        foreach (var m in proiecte)
-        {
-            if (m.Student == numeStudent)
-            {
-                Console.WriteLine("Profesorul reexamineaza nota...");
-                m.nota = Console.ReadLine();
-                Console.WriteLine($"Nota a fost modificata : {m.nota}");
-            }
-        }
-    }
-
     public void AfiseazaInformatii()
     {
         Console.WriteLine($"Nume: {NumePrenume} -> Numar Matricol: {numarMatricol} -> Email: {email}");
