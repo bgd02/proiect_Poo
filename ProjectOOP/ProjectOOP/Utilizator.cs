@@ -79,6 +79,14 @@ namespace ConsoleApp1
             this.parola = parola;
         }
 
+        public Utilizator(string numePrenume, string email, string parola)
+        {
+            this.NumePrenume = numePrenume;
+            this.Email = email;
+            this.parola = parola;
+        }
+        
+
         
             
         

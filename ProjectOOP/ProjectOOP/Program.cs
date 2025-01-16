@@ -11,13 +11,13 @@ class Program
         List<Sesiune> Sesiuni = new List<Sesiune>();
         List<Proiect> Proiecte = new List<Proiect>();
         
-        (Sesiuni, Proiecte) = Fisier.Incarcare();
-        
         List<(string,string)> Note=new List<(string,string)>();
         
         List<Utilizator> utilizatori = new List<Utilizator>();
 
-        var profesor = new Profesor("12312", "John Doe", "JohnDoe@gmail.com", "A1!aaaaa");
+        (Sesiuni, Proiecte, utilizatori) = Fisier.Incarcare();
+        
+        var profesor = new Profesor("John Doe", "JohnDoe@gmail.com", "A1!aaaaa");
         var student = new Student("12313", "Lazar Andrei", "LazarAndrei@gmail.com", "B1@bbbbb");
         var student2=new Student("1234","Sami","Samuel@gmail.com","S1#sssss");
 
@@ -30,13 +30,13 @@ class Program
         while (open)
         {
             string optiune;
-            Console.WriteLine("0. Exit\n1.Login\n2.Afisare utilizatori\n3.Creare cont student");
+            Console.WriteLine("0.Exit\n1.Login\n2.Afisare utilizatori\n3.Creare cont student");
             optiune = Console.ReadLine();
 
             switch (optiune)
             {
                 case "0":
-                    Fisier.Salvare(Sesiuni, Proiecte);
+                    Fisier.Salvare(Sesiuni, Proiecte,utilizatori);
                     open = false;
                     break;
                 case "1":
@@ -77,12 +77,9 @@ class Program
         studentauxiliar = null;
         foreach (var uu in utilizatori)
         {
-                                    
-                                    
             if (email == uu.email && parola == uu.parola)
             {
-                studentauxiliar = new Student(uu.numarMatricol, uu.NumePrenume, uu.email,
-                    uu.parola);
+                studentauxiliar = new Student(uu.numarMatricol, uu.NumePrenume, uu.email, uu.parola);
                 Console.WriteLine($"{uu.NumePrenume} {uu.numarMatricol} {uu.email} {uu.parola}");
                 return studentauxiliar;
             }
@@ -138,7 +135,7 @@ class Program
         
     }
     
-        static void MeniuProfesor(Profesor profesor, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
+    static void MeniuProfesor(Profesor profesor, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
             {
 
                 Sesiune sesiune = null;
@@ -178,7 +175,6 @@ class Program
                         case "4":
                         {
                             profesor.NotareProiect(Proiecte);
-                            Fisier.Salvare(Sesiuni, Proiecte);
                             break;
                         }
                         case "5":
@@ -189,7 +185,6 @@ class Program
                         case "6":
                         {
                             profesor.ModificareNotaProiect(Proiecte);
-                            Fisier.Salvare(Sesiuni, Proiecte);
                             break;
                         }
                         case "7":
@@ -210,8 +205,7 @@ class Program
                 }
             }
         }
-    
-       static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note)
+    static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note)
             {
                 
                 Sesiune sesiune = null;

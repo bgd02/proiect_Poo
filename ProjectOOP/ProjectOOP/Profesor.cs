@@ -5,8 +5,8 @@ public class Profesor : Utilizator
 {
     
 
-    public Profesor(string numarMatricol, string numePrenume, string email, string parola)
-        : base(numarMatricol, numePrenume, email, parola)
+    public Profesor( string numePrenume, string email, string parola)
+        : base( numePrenume, email, parola)
     {
     }
 
@@ -44,7 +44,10 @@ public class Profesor : Utilizator
                 Console.WriteLine("Profesorul reexamineaza nota...");
                 m.nota = Console.ReadLine();
                 Console.WriteLine($"Nota a fost modificata : {m.nota}");
+                break;
             }
+
+            Console.WriteLine("Studentul nu a fost gasit;");
         }
     }
     public void DeschideSesiunea(List<Sesiune> sesiuni)
@@ -132,7 +135,7 @@ public class Profesor : Utilizator
         {
             if (Pr.Student ==nume  && Pr.nota=="---")
             {
-                Console.WriteLine($"Introduceti nota pentru studentul {Pr.Student} care are proiectul:{Pr.numeProiect} ");
+                Console.WriteLine($"Introduceti nota pentru studentul {Pr.Student} care are proiectul:\n{Pr.numeProiect} ");
                 string notastd = Console.ReadLine();
                 Pr.nota = notastd;
                 Console.WriteLine($"Nota studentului {Pr.Student} este {Pr.nota}");

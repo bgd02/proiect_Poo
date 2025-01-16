@@ -1,3 +1,5 @@
+using ConsoleApp1;
+
 namespace ProjectOOP;
 using System;
 using System.Collections.Generic;
@@ -8,14 +10,15 @@ public class Fisier
 {
     private const string FilePath = "data.json";
 
-    public static void Salvare(List<Sesiune> sesiuni, List<Proiect> proiecte)
+    public static void Salvare(List<Sesiune> sesiuni, List<Proiect> proiecte,List<Utilizator> utilizator)
     {
         try
         {
             var data = new
             {
                 Sesiuni = sesiuni,
-                Proiecte = proiecte
+                Proiecte = proiecte,
+                Utilizator=utilizator
             };
 
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
@@ -36,14 +39,14 @@ public class Fisier
         }
     }
 
-    public static (List<Sesiune>, List<Proiect>) Incarcare()
+    public static (List<Sesiune>, List<Proiect>,List<Utilizator>) Incarcare()
     {
         try
         {
             if (!File.Exists(FilePath))
             {
                 Console.WriteLine("Fișierul nu există.");
-                return (new List<Sesiune>(), new List<Proiect>());
+                return (new List<Sesiune>(), new List<Proiect>(),new List<Utilizator>());
             }
 
             string jsonString = File.ReadAllText(FilePath);
@@ -51,9 +54,10 @@ public class Fisier
 
             var sesiuni = JsonSerializer.Deserialize<List<Sesiune>>(data["Sesiuni"].ToString());
             var proiecte = JsonSerializer.Deserialize<List<Proiect>>(data["Proiecte"].ToString());
-
+            var utilizator = JsonSerializer.Deserialize<List<Utilizator>>(data["Utilizator"].ToString());
+            
             Console.WriteLine("Starea a fost încărcată cu succes.");
-            return (sesiuni, proiecte);
+            return (sesiuni, proiecte, utilizator);
         }
         catch (UnauthorizedAccessException)
         {
@@ -72,7 +76,7 @@ public class Fisier
             Console.WriteLine($"");
         }
 
-        return (new List<Sesiune>(), new List<Proiect>());
+        return (new List<Sesiune>(), new List<Proiect>(),new List<Utilizator>());
     }
     
 }
