@@ -19,18 +19,18 @@ class Program
 
         var profesor = new Profesor("12312", "John Doe", "JohnDoe@gmail.com", "A1!aaaaa");
         var student = new Student("12313", "Lazar Andrei", "LazarAndrei@gmail.com", "B1@bbbbb");
+        var student2=new Student("1234","Sami","Samuel@gmail.com","S1#sssss");
 
         utilizatori.Add(profesor);
         utilizatori.Add(student);
+        utilizatori.Add(student2);
 
         bool open = true;
 
         while (open)
         {
             string optiune;
-
-            
-            Console.WriteLine("1. Login\n0. Exit");
+            Console.WriteLine("0. Exit\n1.Login\n2.Afisare utilizatori\n3.Creare cont student");
             optiune = Console.ReadLine();
 
             switch (optiune)
@@ -41,39 +41,104 @@ class Program
                     break;
                 case "1":
                 {
-                    Console.WriteLine("Scrieti email-ul contului: ");
-                    string email = Console.ReadLine();
-                    Console.WriteLine("Scrieti parola contului: ");
-                    string parola = Console.ReadLine();
-                    var utilizator = utilizatori.Find(u => u.email == email && u.parola == parola);
-                    if (utilizator == null)
-                    {
-                        Console.WriteLine("Invalid.");
-                    }
-                    else
-                    {
-                        switch (utilizator)
-                        {
-                            case Profesor profesor1:
-                            {
-                                MeniuProfesor(profesor, Sesiuni, Proiecte);
-                                break;
-                            }
+                    Logare(utilizatori,Sesiuni,Proiecte,Note,profesor);
 
-                            case Student student1:
-                            {
-                                MeniuStudent(student, Sesiuni, Proiecte,Note);
-                                break;
-                            }
+                    break;
+                }
+                case "2":
+                {
+                    AfisareUtilizator(utilizatori);
 
-                        }
-                    }
-
+                    break;
+                }
+                case "3":
+                {
+                    ContNou(utilizatori);
                     break;
                 }
             }
 
-            static void MeniuProfesor(Profesor profesor, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
+            
+    }
+
+        
+        }
+
+    private static void AfisareUtilizator(List<Utilizator> utilizatori)
+    {
+        foreach (var U in utilizatori)
+        {
+            Console.WriteLine($"Numele: {U.NumePrenume}\n email: {U.email}");
+        }
+    }
+
+    private static Student StudentAuxiliar(List<Utilizator> utilizatori, Student studentauxiliar,string email,string parola)
+    {
+        studentauxiliar = null;
+        foreach (var uu in utilizatori)
+        {
+                                    
+                                    
+            if (email == uu.email && parola == uu.parola)
+            {
+                studentauxiliar = new Student(uu.numarMatricol, uu.NumePrenume, uu.email,
+                    uu.parola);
+                Console.WriteLine($"{uu.NumePrenume} {uu.numarMatricol} {uu.email} {uu.parola}");
+                return studentauxiliar;
+            }
+        }
+        return studentauxiliar;
+    }
+
+    private static void ContNou(List<Utilizator> utilizatori)
+    {
+        Console.WriteLine("Scrieti numarul matricol");
+        string nrmatricol = Console.ReadLine();
+        Console.WriteLine("Scrieti numele studentului:");
+        string nume = Console.ReadLine();
+        Console.WriteLine("Scrieti email-ul contului: ");
+        string email = Console.ReadLine();
+        Console.WriteLine("Scrieti parola");
+        string parola = Console.ReadLine();
+                    
+        Student StudentNou = new Student(nrmatricol, nume, email, parola);
+        utilizatori.Add(StudentNou);
+    }
+    public static void Logare(List<Utilizator> utilizatori,List<Sesiune> Sesiuni,List<Proiect> Proiecte,List<(string,string)> Note,Profesor profesor)
+    {
+        Console.WriteLine("Scrieti email-ul contului: ");
+        string email = Console.ReadLine();
+        Console.WriteLine("Scrieti parola contului: ");
+        string parola = Console.ReadLine();
+                    
+        var utilizator = utilizatori.Find(u => u.email == email && u.parola == parola);
+        if (utilizator == null)
+        {
+            Console.WriteLine("Invalid.");
+        }
+        else
+        {
+            switch (utilizator)
+            {
+                case Profesor:
+                {
+                    MeniuProfesor(profesor, Sesiuni, Proiecte);
+                    break;
+                }
+
+                case Student std:
+                {
+                    Student studentauxiliar = StudentAuxiliar(utilizatori, std, email, parola);;
+                    MeniuStudent(studentauxiliar, Sesiuni, Proiecte,Note);
+                    break;
+                }
+
+            }
+        }
+        
+    }
+    
+        static void MeniuProfesor(Profesor profesor, List<Sesiune> Sesiuni, List<Proiect> Proiecte)
             {
 
                 Sesiune sesiune = null;
@@ -90,9 +155,9 @@ class Program
                     Console.WriteLine("6.Modificare nota proiect.");
                     Console.WriteLine("7.Vizualizare lista proiecte.");
                     Console.WriteLine("8.Delogare");
-                    Console.WriteLine("0.Exit");
 
                     string option = Console.ReadLine();
+                 
                     switch (option)
                     {
                         case "1":
@@ -112,12 +177,8 @@ class Program
                         }
                         case "4":
                         {
-                            foreach(var n in Proiecte)
-                                {   
-                                 profesor.NotareProiect(n);
-                                }
+                            profesor.NotareProiect(Proiecte);
                             Fisier.Salvare(Sesiuni, Proiecte);
-                           
                             break;
                         }
                         case "5":
@@ -128,6 +189,7 @@ class Program
                         case "6":
                         {
                             profesor.ModificareNotaProiect(Proiecte);
+                            Fisier.Salvare(Sesiuni, Proiecte);
                             break;
                         }
                         case "7":
@@ -140,12 +202,16 @@ class Program
                             John = false;
                             break;
                         }
+                        case "9":
+                        {
+                            John = false;
+                            break;
+                        }
                 }
             }
         }
-    }
-
-            static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note)
+    
+       static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note)
             {
                 
                 Sesiune sesiune = null;
@@ -178,12 +244,12 @@ class Program
                         }
                         case "3":
                         {
-                                student.VizualizareNota(Proiecte);
+                                student.VizualizareNota(Proiecte,student);
                                 break;
                         }
                         case "4":
                         {     
-                                student.IstoricNote(Note,Proiecte);
+                                student.IstoricNote(Note,Proiecte,student);
                                 break;
                         }
                         case "5":
@@ -200,8 +266,9 @@ class Program
                     }
                 }
             }
-        }
-    }
+
+   
+}
 
 
 

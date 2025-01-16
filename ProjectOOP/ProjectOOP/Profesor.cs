@@ -10,6 +10,7 @@ public class Profesor : Utilizator
     {
     }
 
+    
     public void RaspunsReclamatii(List<Proiect>LProiecte)
     {
         foreach (var RE in LProiecte)
@@ -122,18 +123,27 @@ public class Profesor : Utilizator
         }
         
     }
-    public void NotareProiect(Proiect n)
+    public void NotareProiect(List<Proiect> LProiecte)
     {
-        Console.WriteLine($"Introduceti nota pentru studentul {n.Student}");
-        string notastd = Console.ReadLine();
-        
-        n.nota = notastd;
-        
-        Console.WriteLine($"Nota studentului {n.Student} este {n.nota}");
-    }
-    public void AfiseazaInformatii()
-    {
-        Console.WriteLine($"Nume: {NumePrenume} -> Numar Matricol: {numarMatricol} -> Email: {email}");
+        Console.WriteLine("Introdusceti numeele studentului pe care dortiti sa-l notati");
+        string nume=Console.ReadLine();
+        string gasit = "0";
+        foreach (var Pr in LProiecte)
+        {
+            if (Pr.Student ==nume  && Pr.nota=="---")
+            {
+                Console.WriteLine($"Introduceti nota pentru studentul {Pr.Student} care are proiectul:{Pr.numeProiect} ");
+                string notastd = Console.ReadLine();
+                Pr.nota = notastd;
+                Console.WriteLine($"Nota studentului {Pr.Student} este {Pr.nota}");
+                gasit = "1";
+            }
+        }
+
+        if (gasit == "0")
+        {
+            Console.WriteLine("Nu de aici se modifica Nota");
+        }
     }
 }
     

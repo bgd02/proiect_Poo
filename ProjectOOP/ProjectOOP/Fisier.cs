@@ -32,7 +32,7 @@ public class Fisier
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"A apărut o eroare:");
+            Console.WriteLine($"");
         }
     }
 
@@ -69,7 +69,7 @@ public class Fisier
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"A apărut o eroare: ");
+            Console.WriteLine($"");
         }
 
         return (new List<Sesiune>(), new List<Proiect>());

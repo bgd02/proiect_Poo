@@ -62,25 +62,31 @@
            
         }
 
-        public void VizualizareNota(List<Proiect> LProiecte)
+        public void VizualizareNota(List<Proiect> LProiecte,Student student)
         {
             foreach (var P in LProiecte )
             {
-                Console.WriteLine($"Nota studentului {P.Student} este: {P.nota} ");
+                if (P.Student == student.numePrenume)
+                {
+                    Console.WriteLine($"Nota studentului {P.Student} este: {P.nota} ");
+                }
             }
             
         }
 
-        public void IstoricNote(List<(string,string)> LNote,List<Proiect> LProiecte)
+        public void IstoricNote(List<(string,string)> LNote,List<Proiect> LProiecte,Student student)
         {
             foreach (var PR in LProiecte)
             {
-                LNote.Add((PR.Student,PR.nota));
+                if (PR.Student == student.numePrenume)
+                {
+                    LNote.Add((PR.Student, PR.nota));
+                }
             }
 
             foreach (var PR in LNote)
             {
-                Console.WriteLine($"Studentul:{PR.Item1}\nNota:{PR.Item2}");
+                    Console.WriteLine($"Studentul:{PR.Item1}\nNota:{PR.Item2}");
             }
             
         }
@@ -95,7 +101,8 @@
                 {
                     
                     Console.WriteLine("Introduceti reclamatia: ");
-                    sr.reclamatie = Console.ReadLine();
+                    string reclamatie = Console.ReadLine();
+                    sr.reclamatie = reclamatie;
                     if (sr.reclamatie.Length<5)
                     {
                         sr.reclamatie = "---";

@@ -8,6 +8,8 @@ namespace ConsoleApp1
     {
         private string NumarMatricol;
 
+        
+
         public string numarMatricol
         {
             get { return NumarMatricol; }
@@ -24,7 +26,7 @@ namespace ConsoleApp1
             }
         }
 
-        protected string NumePrenume;
+        public string NumePrenume;
 
         public string numePrenume
         {
