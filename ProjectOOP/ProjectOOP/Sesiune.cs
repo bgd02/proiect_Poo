@@ -11,9 +11,6 @@
         this.isOpen = isOpen;
     }
     
-    public override string ToString()
-    {
-        return $"Sesiune: {numeSesiune} (Cod: {codSesiune}, : {isOpen})";
-    }
+  
     
 }

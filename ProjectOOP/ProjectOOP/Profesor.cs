@@ -64,7 +64,7 @@ public class Profesor : Utilizator
         if (sesiuni.Exists(s => s.codSesiune == codSesiune))
         {
             sesiune.isOpen=true;
-            Console.WriteLine("Sesiunea deja exista."); 
+            Console.WriteLine("Sesiunea deja exista si a fost deschisa."); 
         }
         else
         {
@@ -93,13 +93,13 @@ public class Profesor : Utilizator
                 {
                     Console.WriteLine($"Sesiunea cu codul {codSesiune} a fost stearsa.");
                     sesiune.RemoveAt(i); 
-                    break; 
+                    
                 }
                 else if (opt == "1")
                 {
                     sesiune[i].isOpen = false; 
                     Console.WriteLine("Sesiunea a ramas inchisa.");
-                    break; 
+                    
                 }
             }
         }
@@ -128,7 +128,7 @@ public class Profesor : Utilizator
     }
     public void NotareProiect(List<Proiect> LProiecte)
     {
-        Console.WriteLine("Introdusceti numeele studentului pe care dortiti sa-l notati");
+        Console.WriteLine("Introdusceti numele studentului pe care dortiti sa-l notati");
         string nume=Console.ReadLine();
         string gasit = "0";
         foreach (var Pr in LProiecte)
@@ -145,7 +145,7 @@ public class Profesor : Utilizator
 
         if (gasit == "0")
         {
-            Console.WriteLine("Nu de aici se modifica Nota");
+            Console.WriteLine("Studentul a fost deja notat");
         }
     }
 }

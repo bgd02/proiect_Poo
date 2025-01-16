@@ -10,8 +10,9 @@
             
         }
 
-        public void InscriereLaSesiune(List<Sesiune> LSesiune)
+        public void InscriereLaSesiune(List<Sesiune> LSesiune,bool inscris)
         {
+            bool sesiunegasita = false;
             Console.WriteLine("Introduceti codul sesiunii la care doriti sa va inscrieti : ");
             string cod = Console.ReadLine();
             
@@ -19,27 +20,31 @@
             {
                 if (s.codSesiune == cod && s.isOpen)
                 {
+                    sesiunegasita = true;
                     Console.WriteLine($"Studentul {numePrenume} s-a înscris la sesiunea '{s.numeSesiune}'.");
+                    inscris = true;
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("Sesiunea nu este disponibila.");
-                }
+                
+            }
+            if (!sesiunegasita)
+            {
+                Console.WriteLine("Inscrierea la sesiune a esuat");
             }
         }
 
         
-        public void PredareProiect(List<Sesiune> LSesiune, List<Proiect> LProiecte,Student student)
+        public void PredareProiect(List<Sesiune> LSesiune, List<Proiect> LProiecte,Student student,bool inscris)
         {
             Console.WriteLine("Introduceti codul sesiunii la care doriti sa va predati proiectul : ");
             string cod = Console.ReadLine();
+            bool sesiuneGasita = false;
             
             foreach (var sesiune in LSesiune)
             {
-                if (sesiune.codSesiune == cod && sesiune.isOpen)
-                {
-                    
+                if (sesiune.codSesiune == cod && sesiune.isOpen && inscris)
+                { 
+                    sesiuneGasita = true;
                 Console.WriteLine("Introduceti numele proiectului pe care doriti sa il incarcati : ");
                 string numeProiect = Console.ReadLine();
                 
@@ -50,16 +55,16 @@
                 LProiecte.Add(proiect2);
                     
                 Console.WriteLine($"Proiectul a fost predat pentru sesiunea '{sesiune.numeSesiune}'.");
-                    
+               
+                break;
                 }
                 
-                else
-                {
-                    Console.WriteLine("Proiectul nu poate fi predat.");
-                }
             }
 
-           
+            if (!sesiuneGasita)
+            {
+                Console.WriteLine("Nu se poate preda proiectul.");
+            }
         }
 
         public void VizualizareNota(List<Proiect> LProiecte,Student student)

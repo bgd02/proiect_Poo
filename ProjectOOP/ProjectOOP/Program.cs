@@ -16,6 +16,8 @@ class Program
         List<Utilizator> utilizatori = new List<Utilizator>();
 
         (Sesiuni, Proiecte, utilizatori) = Fisier.Incarcare();
+
+        bool inscris = false;
         
         var profesor = new Profesor("John Doe", "JohnDoe@gmail.com", "A1!aaaaa");
         var student = new Student("12313", "Lazar Andrei", "LazarAndrei@gmail.com", "B1@bbbbb");
@@ -41,7 +43,7 @@ class Program
                     break;
                 case "1":
                 {
-                    Logare(utilizatori,Sesiuni,Proiecte,Note,profesor);
+                    Logare(utilizatori,Sesiuni,Proiecte,Note,profesor,inscris);
 
                     break;
                 }
@@ -80,7 +82,6 @@ class Program
             if (email == uu.email && parola == uu.parola)
             {
                 studentauxiliar = new Student(uu.numarMatricol, uu.NumePrenume, uu.email, uu.parola);
-                Console.WriteLine($"{uu.NumePrenume} {uu.numarMatricol} {uu.email} {uu.parola}");
                 return studentauxiliar;
             }
         }
@@ -101,7 +102,7 @@ class Program
         Student StudentNou = new Student(nrmatricol, nume, email, parola);
         utilizatori.Add(StudentNou);
     }
-    public static void Logare(List<Utilizator> utilizatori,List<Sesiune> Sesiuni,List<Proiect> Proiecte,List<(string,string)> Note,Profesor profesor)
+    public static void Logare(List<Utilizator> utilizatori,List<Sesiune> Sesiuni,List<Proiect> Proiecte,List<(string,string)> Note,Profesor profesor,bool inscris)
     {
         Console.WriteLine("Scrieti email-ul contului: ");
         string email = Console.ReadLine();
@@ -126,7 +127,7 @@ class Program
                 case Student std:
                 {
                     Student studentauxiliar = StudentAuxiliar(utilizatori, std, email, parola);;
-                    MeniuStudent(studentauxiliar, Sesiuni, Proiecte,Note);
+                    MeniuStudent(studentauxiliar, Sesiuni, Proiecte,Note,inscris);
                     break;
                 }
 
@@ -205,7 +206,7 @@ class Program
                 }
             }
         }
-    static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note)
+    static void MeniuStudent(Student student, List<Sesiune> Sesiuni, List<Proiect> Proiecte,List<(string,string)> Note,bool inscris)
             {
                 
                 Sesiune sesiune = null;
@@ -227,13 +228,13 @@ class Program
                     {
                         case "1":
                         {
-                                student.InscriereLaSesiune(Sesiuni);
+                                student.InscriereLaSesiune(Sesiuni,inscris);
                                 break;
                         }
 
                         case "2":
                         {
-                                student.PredareProiect(Sesiuni, Proiecte, student);
+                                student.PredareProiect(Sesiuni, Proiecte, student,inscris);
                                 break;
                         }
                         case "3":
