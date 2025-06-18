@@ -1,0 +1,62 @@
+TASK 1:
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#ifndef BUF_SIZE
+#define BUF_SIZE 12
+#endif
+int bof(FILE *badfile)
+{
+char buffer[BUF_SIZE];
+fread(buffer, sizeof(char), 300, badfile);
+return 1;
+}
+int main(int argc, char **argv)
+{
+FILE *badfile;
+char dummy[BUF_SIZE*5]; memset(dummy, 0, BUF_SIZE*5);
+badfile = fopen("badfile", "r");
+bof(badfile);
+printf("Returned Properly\n");
+fclose(badfile);
+return 1;
+}
+
+
+
+
+
+TASK 2:
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+int main(){
+char* shell = getenv("MYSHELL");
+if (shell)
+printf("%x\n", (unsigned int)shell);
+return 0;
+}
+
+
+TASK 3:
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+int main(int argc, char **argv)
+{
+    char buf[40];
+    FILE *badfile;
+    badfile = fopen("./badfile", "w");
+    long sh_adr = 0x00000000;   
+    long system_adr = 0x00000000;   
+    long exit_add = 0x00000000;   
+    int X = 0;   
+    int Y = 8;   
+    int Z = 16;  
+    *(long *) &buf[X] = sh_adr;
+    *(long *) &buf[Y] = system_adr;
+    *(long *) &buf[Z] = exit_adr;
+    fwrite(buf, sizeof(buf), 1, badfile);
+    fclose(badfile);
+    return 0;
+}
